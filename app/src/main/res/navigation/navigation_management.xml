@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/homeFragmentManagement">
+    <fragment
+        android:id="@+id/homeFragmentManagement"
+        android:name="com.pragyanSpace.pathcare_management.management.home.ui.ManagementHomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+    <fragment
+        android:id="@+id/qrFragmentManagement"
+        android:name="com.pragyanSpace.pathcare_management.management.qrScanner.ui.QrScannerFragment"
+        android:label="QrFragment"
+        tools:layout="@layout/fragment_qr_scanner">
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragmentManagement"
+        android:name="com.pragyanSpace.pathcare_management.management.profile.ui.ManagementProfile"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile"/>
+</navigation>
