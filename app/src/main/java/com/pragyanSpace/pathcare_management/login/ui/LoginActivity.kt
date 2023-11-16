@@ -15,11 +15,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.storage.FirebaseStorage
 import com.pragyanSpace.pathcare_management.R
 import com.pragyanSpace.pathcare_management.databinding.ActivitySigninBinding
 import com.pragyanSpace.pathcare_management.login.model.LoginRequestModel
 import com.pragyanSpace.pathcare_management.login.viewmodel.LoginActivityViewModel
 import com.pragyanSpace.pathcare_management.management.ManagementActivity
+import com.pragyanSpace.pathcare_management.register.AskUserDetailAfterRegister
 import com.pragyanSpace.pathcare_management.register.ui.RegisterActivity
 import com.pragyanSpace.pathcare_management.utility.AppUrls
 import com.pragyanSpace.pathcare_management.utility.BaseUtil
@@ -30,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivitySigninBinding
     private var viewModel: LoginActivityViewModel? = null
     var textWatchers: TextWatcher? = null
+    var id:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
 
         if (PrefUtil(this).sharedPreferences?.getBoolean(PrefUtil.IS_LOGIN, false) == true) {
+//            checkIfDpUploaded()
             val intent = Intent(this@LoginActivity, ManagementActivity::class.java)
             startActivity(intent)
             finish()
@@ -45,6 +49,24 @@ class LoginActivity : AppCompatActivity() {
         observeErrorMessage()
         observeApiResponse()
         initListener()
+
+    }
+
+    private fun checkIfDpUploaded() {
+        val storageRef = FirebaseStorage.getInstance().getReference()
+        id=PrefUtil(this).sharedPreferences?.getString("ID","void")
+        val fileRef = storageRef.child("hospitals/${id}.jpg")
+
+        fileRef.metadata.addOnSuccessListener {
+            val intent = Intent(this@LoginActivity, ManagementActivity::class.java)
+            startActivity(intent)
+            finish()
+        }.addOnFailureListener {
+            val intent = Intent(this@LoginActivity, AskUserDetailAfterRegister::class.java)
+            intent.putExtra("ID",id)
+            startActivity(intent)
+            finish()
+        }
 
     }
 
@@ -109,19 +131,24 @@ class LoginActivity : AppCompatActivity() {
     private fun observeApiResponse() {
         viewModel?.loginResponseMutableLiveData?.observe(this, Observer {
             AppUrls.TOKEN = "Bearer " + it.token.toString()
-            Log.i(TAG, "observeApiResponse: ${it.user}")
             PrefUtil(this@LoginActivity).sharedPreferences?.edit()
                 ?.putBoolean(PrefUtil.IS_LOGIN, true)?.apply()
             PrefUtil(this@LoginActivity).sharedPreferences?.edit()
                 ?.putString(PrefUtil.TOKEN, "Bearer " + it.token)?.apply()
             PrefUtil(this@LoginActivity).sharedPreferences?.edit()
-                ?.putString(PrefUtil.ID, it.user?.Id)?.apply()
+                ?.putString(PrefUtil.ID, it?.id)?.apply()
+//            PrefUtil(this@LoginActivity).sharedPreferences?.edit()
+//                ?.putString(PrefUtil.USERNAME, it.user?.name)?.apply()
             if(it.success==true)
             {
-                val intent = Intent(this@LoginActivity, ManagementActivity::class.java)
-                intent.putExtra("username",it.user?.name)
-                startActivity(intent)
-                finish()
+                checkIfDpUploaded()
+            }
+            else
+            {
+                val snack = Snackbar.make(binding.root, "${it}", Snackbar.LENGTH_SHORT)
+                snack.setBackgroundTint(resources.getColor(R.color.color_5658DD))
+                snack.setTextColor(resources.getColor(R.color.white))
+                snack.show()
             }
         })
     }

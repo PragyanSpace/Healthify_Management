@@ -10,7 +10,7 @@ class RetrofitUtilClass {
     companion object {
         private lateinit var retrofit: Retrofit
 
-        val API_BASE_URL_PROD = "https://path-med.onrender.com/"
+        val API_BASE_URL_PROD = "https://healthify-8z0y.onrender.com/"
 
         fun getRetrofit(): Retrofit {
 

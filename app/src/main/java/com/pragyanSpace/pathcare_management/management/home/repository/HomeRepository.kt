@@ -35,9 +35,6 @@ class HomeRepository {
                     body?.let {
                         appointmentResponseModel.postValue(it)
                     }
-                } else {
-                    val jObjError = JSONObject(response.errorBody()?.string())
-                    errorMessage.postValue(jObjError.getString("message"))
                 }
             }
 

@@ -3,11 +3,23 @@ package com.pragyanSpace.pathcare_management.appointmentDetail.model
 import com.google.gson.annotations.SerializedName
 
 data class AppointmentResponseData2(
-    @SerializedName("success") var success: Boolean? = null,
-    @SerializedName("appointments") var appointments: ArrayList<Appointments> = arrayListOf(),
-    @SerializedName("message") var message: String? = null,
-    @SerializedName("error") var error: String? = null
+    @SerializedName("success"     ) var success     : Boolean?     = null,
+    @SerializedName("appointment" ) var appointment : Appointment? = Appointment(),
+    @SerializedName("message"     ) var message     : String?      = null,
+    @SerializedName("error"       ) var error       : String?      = null
 )
+
+data class Appointment (
+    @SerializedName("_id"              ) var Id              : String? = null,
+    @SerializedName("hospital_id"      ) var hospitalId      : String? = null,
+    @SerializedName("user_id"          ) var userId          : String? = null,
+    @SerializedName("appointment_date" ) var appointmentDate : String? = null,
+    @SerializedName("urgency"          ) var urgency         : Int?    = null,
+    @SerializedName("req_date"         ) var reqDate         : String? = null,
+    @SerializedName("__v"              ) var _v              : Int?    = null,
+    @SerializedName("status"           ) var status          : String? = null,
+    @SerializedName("doctor_id"        ) var doctorId        : String? = null
+        )
 
 data class Appointments(
 

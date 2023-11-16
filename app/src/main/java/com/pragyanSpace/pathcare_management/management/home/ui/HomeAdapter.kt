@@ -18,19 +18,14 @@ class HomeAdapter(
     class ViewHolder(val binding: AppointmentRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindView(hospitalData: Appointments?, context: Context, position: Int) {
+        fun bindView(appointmentData: Appointments?, context: Context, position: Int) {
 
-            binding.name.text = hospitalData?.user?.name.toString()
-            binding.address.text = hospitalData?.appointmentDate?.substring(0,10).toString()
+            binding.name.text = appointmentData?.userName
+            binding.address.text = appointmentData?.appointmentDate?.substring(0,10).toString()
 
             binding.root.setOnClickListener {
                 var intent = Intent(context, AppointmentDetail::class.java)
-                intent.putExtra("name", hospitalData?.user?.name)
-                intent.putExtra("dob", hospitalData?.user?.dob)
-                intent.putExtra("blood", hospitalData?.user?.bloodGroup)
-                intent.putExtra("email", hospitalData?.user?.email)
-                intent.putExtra("contact", hospitalData?.user?.phoneNumber)
-                intent.putExtra("id", hospitalData?.Id)
+                intent.putExtra("id", appointmentData?.Id)
                 startActivity(context, intent, null)
             }
 

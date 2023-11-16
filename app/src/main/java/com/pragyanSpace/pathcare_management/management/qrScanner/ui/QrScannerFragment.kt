@@ -18,6 +18,9 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.pragyanSpace.pathcare_management.management.qrScanner.viewmodel.QRViewmodel
 import com.pragyanSpace.pathcare_management.utility.PrefUtil
 import com.pragyanSpace.pathcare_management.R
+import com.pragyanSpace.pathcare_management.appointmentDetail.model.CreateAppointmentReqModel
+import com.pragyanSpace.pathcare_management.appointmentDetail.ui.AssignDoctorBottomSheet
+import com.pragyanSpace.pathcare_management.appointmentDetail.viewmodel.AppointmentDetailViewmodel
 import com.pragyanSpace.pathcare_management.databinding.FragmentQrScannerBinding
 
 class QrScannerFragment : Fragment() {
@@ -25,29 +28,49 @@ class QrScannerFragment : Fragment() {
     private lateinit var binding: FragmentQrScannerBinding
     private val MY_CAMERA_REQUEST_CODE = 100
     lateinit var viewmodel: QRViewmodel
+    var token:String?=null
+    var userId:String?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentQrScannerBinding.inflate(layoutInflater, container, false)
-
         viewmodel = ViewModelProvider(this).get(QRViewmodel::class.java)
-        observeUserApiCall()
+        token=PrefUtil(requireContext()).sharedPreferences?.getString(PrefUtil.TOKEN, "")
+
+        observeCheckAppointmentApiCall()
         return binding.root
     }
 
-    private fun callUserDetailApi(id : String) {
+
+    private fun callCheckAppointmentApi(id : String) {
         val token=PrefUtil(requireContext()).sharedPreferences?.getString(PrefUtil.TOKEN, "")
-        viewmodel.callUserApi(token,id)
+        viewmodel.callCheckAppointmentApi(token,id)
     }
 
-    private fun observeUserApiCall() {
-        viewmodel.userResponseMutableLiveData.observe(viewLifecycleOwner, Observer {
-            var intent = Intent(requireContext(), ManagementPatientDetailActivity::class.java)
-            intent.putExtra("name", it.user?.name)
-            intent.putExtra("email", it.user?.email)
-            intent.putExtra("dob", it.user?.dob)
-            intent.putExtra("blood", it.user?.bloodGroup)
-            startActivity(intent)
+
+    private fun observeCheckAppointmentApiCall() {
+        viewmodel.userAppointmentResponseMutableLiveData.observe(viewLifecycleOwner, Observer {
+            if(it.success==true)
+            {
+                Toast.makeText(requireContext(),"Appointment available",Toast.LENGTH_LONG).show()
+                var intent = Intent(requireContext(), ManagementPatientDetailActivity::class.java)
+                intent.putExtra("name", it.appointment?.userId?.name)
+                intent.putExtra("email", it.appointment?.userId?.phoneNumber)
+                intent.putExtra("dob", it.appointment?.userId?.dob)
+                intent.putExtra("blood", it.appointment?.userId?.bloodGroup)
+                intent.putExtra("date", it.appointment?.appointmentDate)
+                intent.putExtra("description", it.appointment?.description)
+                intent.putExtra("docName", it.appointment?.doctorId?.name)
+                startActivity(intent)
+            }
+            else
+            {
+                Toast.makeText(requireContext(),"Appointment not available. Create appointment",Toast.LENGTH_LONG).show()
+                val bottomSheetDialog = AssignDoctorBottomSheet(token,userId,1)
+                bottomSheetDialog.isCancelable=true
+                bottomSheetDialog.show(activity?.supportFragmentManager!!, "CustomBottomSheetDialogFragment")
+
+            }
         })
     }
 
@@ -73,7 +96,9 @@ class QrScannerFragment : Fragment() {
 
         codeScanner.decodeCallback = DecodeCallback {
             activity.runOnUiThread {
-                callUserDetailApi(it.toString())
+//                callUserDetailApi(it.toString())
+                userId=it.toString()
+                callCheckAppointmentApi(it.toString())
             }
         }
         scannerView.setOnClickListener {

@@ -40,12 +40,15 @@
                 android:layout_height="350dp"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/hosImg"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    app:civ_border_color="@color/blue"
+                    app:civ_border_width="4dp"
+                    android:src="@drawable/hos"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="45dp"
-                    android:background="@drawable/hos" />
+                    android:layout_marginTop="45dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -53,7 +56,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:text="@{name}"
-                    android:textColor="@color/red"
+                    android:textColor="@color/blue"
                     android:textSize="21sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -68,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:background="@color/red"
+                    android:background="@color/blue"
                     android:weightSum="1">
 
                     <LinearLayout
@@ -122,7 +125,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/red"
+                    android:textColor="@color/blue"
                     android:paddingLeft="20dp"
                     android:text="@{email}" />
             </LinearLayout>
@@ -146,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:textColor="@color/red"
+                    android:textColor="@color/blue"
                     android:text="@{contact}" />
             </LinearLayout>
 
@@ -169,7 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:textColor="@color/red"
+                    android:textColor="@color/blue"
                     android:text="@{departments}" />
             </LinearLayout>
 

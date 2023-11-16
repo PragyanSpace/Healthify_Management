@@ -3,15 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +36,7 @@
                     android:layout_marginHorizontal="@dimen/margin_large"
                     android:layout_marginTop="@dimen/margin_normal"
                     android:text="Already have an account?"
-                    android:textColor="@color/red"
+                    android:textColor="@color/blue"
                     android:textColorLink="@color/purple_500"
                     android:textFontWeight="400"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -67,20 +61,20 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/logo"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:scaleType="fitXY"
+                    android:layout_width="300dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/app_logo" />
+                    app:srcCompat="@drawable/app_logo_name" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/loginHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Register"
-                    android:textColor="@color/red"
+                    android:textColor="@color/blue"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +102,7 @@
                         style="@style/LoginTextAppearance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:paddingHorizontal="@dimen/padding_large"
                         android:paddingVertical="12dp">
 
@@ -202,6 +196,23 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-    </RelativeLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#60FFFFFF"
+            android:visibility="gone">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/blue_dot_loader" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

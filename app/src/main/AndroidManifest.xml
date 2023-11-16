@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pragyanSpace.pathcare_management">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false"/>
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -23,13 +24,16 @@
         android:theme="@style/Theme.PathCare_Management"
         tools:targetApi="31">
         <activity
-            android:name="com.pragyanSpace.pathcare_management.MainActivity"
-            android:exported="true">
-
-        </activity>
-
+            android:name=".VideoCallActivity"
+            android:exported="false" />
         <activity
-            android:name="com.pragyanSpace.pathcare_management.login.ui.LoginActivity"
+            android:name=".register.AskUserDetailAfterRegister"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".login.ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,21 +41,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.pragyanSpace.pathcare_management.register.ui.RegisterActivity"
-            android:exported="false"/>
-
+            android:name=".register.ui.RegisterActivity"
+            android:exported="false" />
         <activity
-            android:name="com.pragyanSpace.pathcare_management.management.ManagementActivity"
-            android:exported="false"/>
+            android:name=".management.ManagementActivity"
+            android:exported="false" />
         <activity
-            android:name="com.pragyanSpace.pathcare_management.appointmentDetail.ui.AppointmentDetail"
-            android:exported="false"/>
-
+            android:name=".appointmentDetail.ui.AppointmentDetail"
+            android:exported="false" />
         <activity
-            android:name="com.pragyanSpace.pathcare_management.management.qrScanner.ui.ManagementPatientDetailActivity"
-            android:exported="false"/>
+            android:name=".management.qrScanner.ui.ManagementPatientDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

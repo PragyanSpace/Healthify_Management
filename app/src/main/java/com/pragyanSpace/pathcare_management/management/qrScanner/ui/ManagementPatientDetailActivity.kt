@@ -16,5 +16,8 @@ class ManagementPatientDetailActivity : AppCompatActivity() {
         binding.email=intent.getStringExtra("email")
         binding.dob=intent.getStringExtra("dob")
         binding.blood=intent.getStringExtra("blood")
+        binding.date=intent.getStringExtra("date")
+        binding.description=intent.getStringExtra("description")
+        binding.docName=intent.getStringExtra("docName")
     }
 }

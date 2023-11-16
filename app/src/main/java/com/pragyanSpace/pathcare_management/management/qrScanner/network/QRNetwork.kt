@@ -1,5 +1,6 @@
 package com.pragyanSpace.pathcare_management.management.qrScanner.network
 
+import com.pragyanSpace.pathcare_management.management.qrScanner.model.CheckAppointmentAvailableModel
 import com.pragyanSpace.pathcare_management.management.qrScanner.model.UserDataResponseModel
 import retrofit2.Call
 import retrofit2.http.GET
@@ -13,4 +14,10 @@ interface QRNetwork  {
         @Header("Authorization") Authorization: String?,
         @Url url:String
     ): Call<UserDataResponseModel>
+
+    @GET
+    fun callCheckAppointmentApi(
+        @Header("Authorization") Authorization: String?,
+        @Url url:String
+    ): Call<CheckAppointmentAvailableModel>
 }
